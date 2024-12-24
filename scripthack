@@ -5,7 +5,7 @@ local L_7_ = L_4_:NewTab("Main Stuff")
 local L_8_ = L_7_:NewSection("FUCK YOU")
 L_8_:NewButton(
     "Fly",
-    "Fly around like Jesus",
+    "kys",
     function()
 	local L_152_
 	local L_153_ = game.Players.LocalPlayer
