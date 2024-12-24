@@ -1,11 +1,11 @@
-local L_3_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/minoww/Ray-UI/main/Ray%20UI"))()
-local L_4_ = L_3_.CreateLib("R.W Cash GUI", "Sentinel")
+local L_3_ = loadstring(game:HttpGet("https://raw.githubusercontent.com/emkayhacks/UISERVER/refs/heads/main/UISERVER"))()
+local L_4_ = L_3_.CreateLib("emkayhacks", "Universial")
 
 local L_7_ = L_4_:NewTab("Main Stuff")
-local L_8_ = L_7_:NewSection("FUCK YOU")
+local L_8_ = L_7_:NewSection("https://discord.gg/EBZfGSvGvb")
 L_8_:NewButton(
     "Fly",
-    "kys",
+    "Fly around like Jesus",
     function()
 	local L_152_
 	local L_153_ = game.Players.LocalPlayer
